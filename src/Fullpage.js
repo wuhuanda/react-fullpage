@@ -13,27 +13,28 @@ const locationRealHash = locationHash
   ? locationHash[1] || locationHash[2]
   : null;
 
-export class Fullpage extends Component {
+class Fullpage extends Component {
   constructor(props) {
     super(props);
     const { children, initPage, navigation, pagination } = this.props;
     const pageControllerInit = {
       visibleNavigation: navigation, // 是否显示分页按钮
       visiblePagination: pagination, // 是否显示轮播指示器
-      pauseListenScrollWheel: false // 是否监听scroll操作
+      pauseListenScrollWheel: false, // 是否监听scroll操作
     };
     this.state = {
       currentPage: initPage,
       dimensions: { width: 0, height: 0 },
       pageController: pageControllerInit,
       offset: 0,
-      pageCount: children.length
+      pageCount: children.length,
     };
   }
 
   // 初始化
-  init() {
+  init = () => {
     const { anchor } = this.props;
+    const { currentPage } = this.state;
     if (Array.isArray(anchor)) {
       let _currentPage = currentPage;
       for (const index in anchor) {
@@ -46,21 +47,21 @@ export class Fullpage extends Component {
       this.jumpPage(_currentPage);
     }
     debounce(this.getSize, 200);
-  }
+  };
 
   // 跳转到指定页
-  jumpPage(page) {
+  jumpPage = (page) => {
     const { anchor } = this.props;
     if (Array.isArray(anchor)) {
       window.location.hash = anchor[page];
     }
     this.setState({
-      currentPage: page
+      currentPage: page,
     });
-  }
+  };
 
   // 获取并设置当前窗口尺寸
-  getSize() {
+  getSize = () => {
     const { responsiveHeight, isVertical, scrollBar } = this.props;
     const viewPortWidth =
       window.innerWidth ||
@@ -78,86 +79,86 @@ export class Fullpage extends Component {
       Object.assign(_dimensions, { width: "100%" });
     }
     this.setState({
-      dimensions: _dimensions
+      dimensions: _dimensions,
     });
-  }
+  };
 
   // 监听window事件
-  listener() {
-    window.addEventListener("resize", onResize);
+  listener = () => {
+    window.addEventListener("resize", this.onResize());
     document.body.addEventListener("touchmove", onTouchMove, {
-      passive: false
+      passive: false,
     });
-  }
+  };
 
   // 移除监听windows事件
-  removeListener() {
-    window.removeEventListener("resize", onResize);
+  removeListener = () => {
+    window.removeEventListener("resize", this.onResize());
     document.body.removeEventListener("touchmove", onTouchMove, {
-      passive: false
+      passive: false,
     });
-  }
+  };
 
   // 监听 currentPage 和 dimensions 变化
-  onCurrentPageAndDimensions() {
+  onCurrentPageAndDimensions = () => {
     const { isVertical } = this.props;
     const {
       currentPage,
-      dimensions: { width, height }
+      dimensions: { width, height },
     } = this.state;
     if (width > 0 && height > 0) {
       const _offset = currentPage * (isVertical ? height : width);
       this.setState({
-        offset: _offset
+        offset: _offset,
       });
     }
-  }
+  };
 
   // 监听 dimensions 变化
-  onDimensions() {
+  onDimensions = () => {
     const {
       scrollBar,
       responsiveHeight,
       isVertical,
       navigation,
-      pagination
+      pagination,
     } = this.props;
     const {
       pageController,
-      dimensions: { height }
+      dimensions: { height },
     } = this.state;
     if ((scrollBar || height <= responsiveHeight) && isVertical) {
       const _pageController = Object.assign({}, pageController, {
         visibleNavigation: false,
         visiblePagination: false,
-        pauseListenScrollWheel: true
+        pauseListenScrollWheel: true,
       });
       this.setState({
         offset: 0,
-        pageController: _pageController
+        pageController: _pageController,
       });
     } else {
       const _pageController = Object.assign({}, pageController, {
         visibleNavigation: navigation,
         visiblePagination: pagination,
-        pauseListenScrollWheel: false
+        pauseListenScrollWheel: false,
       });
       this.setState({
-        pageController: _pageController
+        pageController: _pageController,
       });
     }
-  }
+  };
 
   // 禁止网页橡皮筋效果
-  onTouchMove(e) {
+  onTouchMove = (e) => {
     e.preventDefault();
-  }
+  };
 
   /**
    * 翻页逻辑
    * @param {number} n - 翻页参数，n<0：向前（上）翻n页，n>0：向后（下）翻n页
    */
-  scroll(n) {
+  scroll = (n) => {
     const { currentPage, pageCount } = this.state;
     if (n < 0 && currentPage === 0) {
       return false;
@@ -167,53 +168,53 @@ export class Fullpage extends Component {
     }
 
     this.jumpPage(currentPage + n);
-  }
+  };
 
   // 翻到下一页
-  slideNext() {
+  slideNext = () => {
     this.scroll(1);
-  }
+  };
 
   // 翻到上一页
-  slidePrev() {
+  slidePrev = () => {
     this.scroll(-1);
-  }
+  };
 
   // 监听向上滚动
-  upHandler() {
+  upHandler = () => {
     const { isVertical } = this.props;
     if (!isVertical) {
       return false;
     }
     this.scroll(-1);
-  }
+  };
 
   // 监听向下滚动
-  downHandler() {
+  downHandler = () => {
     const { isVertical } = this.props;
     if (!isVertical) {
       return false;
     }
     this.scroll(1);
-  }
+  };
 
   // 监听向左滚动
-  leftHandler() {
+  leftHandler = () => {
     const { isVertical } = this.props;
     if (!isVertical) {
       return false;
     }
     this.scroll(1);
-  }
+  };
 
   // 监听向右滚动
-  rightHandler() {
+  rightHandler = () => {
     const { isVertical } = this.props;
     if (!isVertical) {
       return false;
     }
     this.scroll(-1);
-  }
+  };
 
   componentDidMount() {
     this.init();
@@ -223,7 +224,7 @@ export class Fullpage extends Component {
   componentDidUpdate(prevProps, prevState) {
     const {
       currentPage: prevCurrentPage,
-      dimensions: prevDimensions
+      dimensions: prevDimensions,
     } = prevState;
     const { currentPage, dimensions } = this.state;
     if (isEqual(prevCurrentPage, currentPage)) {
@@ -241,40 +242,45 @@ export class Fullpage extends Component {
 
   render() {
     const {
+      children,
       isVertical,
       pageTimeout,
       duration,
       renderPrevButton,
-      renderNextButton
+      renderNextButton,
+      paginationType,
     } = this.props;
     const {
       dimensions,
+      pageCount,
+      offset,
+      currentPage,
       pageController: {
         visibleNavigation,
         visiblePagination,
-        pauseListenScrollWheel
-      }
+        pauseListenScrollWheel,
+      },
     } = this.state;
     const FULLPAGE_STYLE = Object.assign(
       {},
       {
         flexDirection: isVertical ? "column" : "row",
         width: isVertical ? dimensions.width : dimensions.width * pageCount,
-        height: isVertical ? dimensions.height * pageCount : dimensions.height
+        height: isVertical ? dimensions.height * pageCount : dimensions.height,
       }
     );
 
     const CONTAINER_STYLE = Object.assign({}, dimensions, {
-      overflow: pauseListenScrollWheel ? "" : "hidden"
+      overflow: pauseListenScrollWheel ? "" : "hidden",
     });
     return (
       <ReactScrollWheelHandler
         className={styles.container}
         style={CONTAINER_STYLE}
-        upHandler={upHandler}
-        downHandler={downHandler}
-        leftHandler={leftHandler}
-        rightHandler={rightHandler}
+        upHandler={this.upHandler}
+        downHandler={this.downHandler}
+        leftHandler={this.leftHandler}
+        rightHandler={this.rightHandler}
         timeout={pageTimeout}
         pauseListeners={pauseListenScrollWheel}
       >
@@ -284,7 +290,7 @@ export class Fullpage extends Component {
             ...FULLPAGE_STYLE,
             display: "flex",
             transform: `translate${isVertical ? "Y" : "X"}(${-offset}px)`,
-            transitionDuration: `${duration / 1000}s`
+            transitionDuration: `${duration / 1000}s`,
           }}
         >
           {children.map((item, index) => {
@@ -301,13 +307,13 @@ export class Fullpage extends Component {
           isVertical={isVertical}
           pageCount={pageCount}
           currentPage={currentPage}
-          handleChangePage={jumpPage}
+          handleChangePage={this.jumpPage}
         />
         <Navigation
           navigation={visibleNavigation}
           isVertical={isVertical}
-          handlePrev={slidePrev}
-          handleNext={slideNext}
+          handlePrev={this.slidePrev}
+          handleNext={this.slideNext}
           renderPrevButton={renderPrevButton}
           renderNextButton={renderNextButton}
         />
@@ -316,7 +322,7 @@ export class Fullpage extends Component {
   }
 }
 
-Fullpage.prototype = {
+Fullpage.propTypes = {
   initPage: PropTypes.number,
   scrollBar: PropTypes.bool,
   duration: PropTypes.number,
@@ -328,7 +334,7 @@ Fullpage.prototype = {
   anchor: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
   renderPrevButton: PropTypes.func,
   renderNextButton: PropTypes.func,
-  responsiveHeight: PropTypes.number
+  responsiveHeight: PropTypes.number,
 };
 
 Fullpage.defaultProps = {
@@ -338,7 +344,7 @@ Fullpage.defaultProps = {
   pageTimeout: 300,
   direction: "vertical",
   responsiveHeight: 0,
-  anchor: false
+  anchor: false,
 };
 
 export default Fullpage;

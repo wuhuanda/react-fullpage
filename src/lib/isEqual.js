@@ -4,7 +4,7 @@ function isFunction(obj) {
   return toString.call(obj) === "[object Function]";
 }
 
-function eq(a, b, aStack, bStack) {
+const eq = (a, b, aStack, bStack) => {
   // === 结果为 true 的区别出 +0 和 -0
   if (a === b) return a !== 0 || 1 / a === 1 / b;
 
@@ -21,9 +21,9 @@ function eq(a, b, aStack, bStack) {
 
   // 更复杂的对象使用 deepEq 函数进行深度比较
   return deepEq(a, b, aStack, bStack);
-}
+};
 
-function deepEq(a, b, aStack, bStack) {
+const deepEq = (a, b, aStack, bStack) => {
   // a 和 b 的内部属性 [[class]] 相同时 返回 true
   var className = toString.call(a);
   if (className !== toString.call(b)) return false;
@@ -104,6 +104,6 @@ function deepEq(a, b, aStack, bStack) {
   aStack.pop();
   bStack.pop();
   return true;
-}
+};
 
-export default isEq;
+export default eq;

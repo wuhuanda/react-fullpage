@@ -5,7 +5,7 @@ function App() {
   const commonStyle = {
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   };
 
   const ref = useRef();
@@ -22,33 +22,31 @@ function App() {
   };
 
   return (
-    <div>
-      <Fullpage
-        ref={ref}
-        direction={isMobile() ? "horizontal" : "vertical"}
-        pagination
-        paginationType="dot"
-        navigation
-        renderPrevButton={() => <div>Prev</div>}
-        // scrollBar
-        responsiveHeight={800}
-        anchor={["p1", "p2", "p3", "p4"]}
-      >
-        <FullpageItem style={{ ...commonStyle, backgroundColor: "#f90" }}>
-          Page1
-          <button onClick={() => ref.current.slideNext()}>next</button>
-        </FullpageItem>
-        <FullpageItem style={{ ...commonStyle, backgroundColor: "#f69" }}>
-          Page2
-        </FullpageItem>
-        <FullpageItem style={{ ...commonStyle, backgroundColor: "#f63" }}>
-          Page3
-        </FullpageItem>
-        <FullpageItem style={{ ...commonStyle, backgroundColor: "#b72" }}>
-          Page4
-        </FullpageItem>
-      </Fullpage>
-    </div>
+    <Fullpage
+      ref={ref}
+      direction={isMobile() ? "horizontal" : "vertical"}
+      pagination
+      paginationType="dot"
+      navigation
+      renderPrevButton={() => <div>Prev</div>}
+      // scrollBar
+      responsiveHeight={800}
+      anchor={["p1", "p2", "p3", "p4"]}
+    >
+      <FullpageItem style={{ ...commonStyle, backgroundColor: "#f90" }}>
+        Page1
+        <button onClick={() => console.log(ref)}>next</button>
+      </FullpageItem>
+      <FullpageItem style={{ ...commonStyle, backgroundColor: "#f69" }}>
+        Page2
+      </FullpageItem>
+      <FullpageItem style={{ ...commonStyle, backgroundColor: "#f63" }}>
+        Page3
+      </FullpageItem>
+      <FullpageItem style={{ ...commonStyle, backgroundColor: "#b72" }}>
+        Page4
+      </FullpageItem>
+    </Fullpage>
   );
 }
 

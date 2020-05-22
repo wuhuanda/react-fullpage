@@ -6,9 +6,10 @@ import styles from "./style.module.scss";
 
 class Pagination extends Component {
   renderIndicator() {
+    const { paginationType } = this.props;
     const profile = {
       dot: () => this.renderDot(),
-      number: () => this.renderNum()
+      number: () => this.renderNum(),
     };
 
     return profile[paginationType]() || profile["dot"]();
@@ -56,22 +57,22 @@ class Pagination extends Component {
           isVertical ? styles.paginationVertical : styles.paginationHorizontal
         }
       >
-        {renderIndicator()}
+        {this.renderIndicator()}
       </div>
     );
   }
 }
 
-Pagination.prototype = {
+Pagination.propTypes = {
   pagination: PropTypes.bool,
   paginationType: PropTypes.string,
-  isVertical: PropTypes.bool
+  isVertical: PropTypes.bool,
 };
 
 Pagination.defaultProps = {
   pagination: true,
   paginationType: "dot",
-  isVertical: true
+  isVertical: true,
 };
 
 export default Pagination;

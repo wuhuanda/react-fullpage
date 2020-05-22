@@ -25,7 +25,7 @@ class Navigation extends Component {
       handlePrev,
       handleNext,
       renderPrevButton,
-      renderNextButton
+      renderNextButton,
     } = this.props;
 
     if (!navigation) {
@@ -53,16 +53,16 @@ class Navigation extends Component {
   }
 }
 
-Navigation.prototype = {
+Navigation.propTypes = {
   navigation: PropTypes.bool,
   isVertical: PropTypes.bool,
   renderPrevButton: PropTypes.func,
-  renderNextButton: PropTypes.func
+  renderNextButton: PropTypes.func,
 };
 
 Navigation.defaultProps = {
   navigation: false,
-  isVertical: true
+  isVertical: true,
 };
 
 export default Navigation;
