@@ -1,6 +1,6 @@
-# react-fullpage-hooks
+# react-fullpage
 
-使用`React Hooks`写的一个关于全屏轮播的小插件，适用作官网
+使用`React`写的一个关于全屏轮播的小插件，适用作官网
 
 ## 依赖
 
