@@ -1,5 +1,5 @@
 {
-  "name": "react-fullpage-hooks",
+  "name": "react-fullpage",
   "version": "1.0.0",
   "description": "基于react hooks的全屏滚动插件, Full screen rolling plugin based on react hooks",
   "main": "index.js",
