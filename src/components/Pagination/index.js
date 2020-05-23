@@ -5,7 +5,7 @@ import classNames from "classnames";
 import styles from "./style.module.scss";
 
 class Pagination extends Component {
-  renderIndicator() {
+  renderIndicator = () => {
     const { paginationType } = this.props;
     const profile = {
       dot: () => this.renderDot(),
@@ -13,10 +13,10 @@ class Pagination extends Component {
     };
 
     return profile[paginationType]() || profile["dot"]();
-  }
+  };
 
   // 圆点指示器
-  renderDot() {
+  renderDot = () => {
     const { isVertical, pageCount, currentPage, handleChangePage } = this.props;
     const DOT_STYLE = isVertical ? { margin: "5px 0 " } : { margin: "0 5px" };
     return Array(pageCount)
@@ -32,10 +32,10 @@ class Pagination extends Component {
           onClick={() => handleChangePage(index)}
         ></div>
       ));
-  }
+  };
 
   // 数字指示器
-  renderNum() {
+  renderNum = () => {
     const { currentPage, pageCount, isVertical } = this.props;
     const textArr = [currentPage + 1, "/", pageCount];
     const NUM_STYLE = isVertical ? { margin: "5px 0 " } : { margin: "0 5px" };
@@ -44,7 +44,7 @@ class Pagination extends Component {
         {item}
       </div>
     ));
-  }
+  };
 
   render() {
     const { pagination, isVertical } = this.props;

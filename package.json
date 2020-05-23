@@ -6,7 +6,8 @@
   "files": [],
   "scripts": {
     "start": "webpack-dev-server --config config/webpack.dev.config.js",
-    "build": "webpack --config config/webpack.prod.config.js",
+    "build": "npm run clean && webpack --config config/webpack.prod.config.js",
+    "clean": "rm -rf lib",
     "pub": "npm run build && npm publish"
   },
   "repository": {
@@ -16,7 +17,6 @@
   "keywords": [
     "全屏滚动",
     "react",
-    "react hooks",
     "full screen rolling"
   ],
   "author": "wuhuanda",

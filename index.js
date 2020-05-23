@@ -1,2 +1,2 @@
-import { useFullpage, useFullpageItem } from "./lib/fullpage.min";
-export { useFullpage, useFullpageItem };
+import { Fullpage, FullpageItem } from "./lib/fullpage.min";
+export { Fullpage, FullpageItem };

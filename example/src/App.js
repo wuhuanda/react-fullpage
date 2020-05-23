@@ -35,7 +35,7 @@ function App() {
     >
       <FullpageItem style={{ ...commonStyle, backgroundColor: "#f90" }}>
         Page1
-        <button onClick={() => console.log(ref)}>next</button>
+        <button onClick={() => ref.current.slideNext()}>next</button>
       </FullpageItem>
       <FullpageItem style={{ ...commonStyle, backgroundColor: "#f69" }}>
         Page2

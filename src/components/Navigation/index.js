@@ -4,19 +4,13 @@ import PropTypes from "prop-types";
 import styles from "./style.module.scss";
 
 class Navigation extends Component {
-  constructor() {
-    super();
-    this.arrowLeft = this.arrowLeft.bind(this);
-    this.arrowRight = this.arrowRight.bind(this);
-  }
-
-  arrowLeft() {
+  arrowLeft = () => {
     return <div className={styles.arrowLeft}>{"<"}</div>;
-  }
+  };
 
-  arrowRight() {
+  arrowRight = () => {
     return <div className={styles.arrowRight}>{">"}</div>;
-  }
+  };
 
   render() {
     const {

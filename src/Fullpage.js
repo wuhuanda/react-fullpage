@@ -16,7 +16,13 @@ const locationRealHash = locationHash
 class Fullpage extends Component {
   constructor(props) {
     super(props);
-    const { children, initPage, navigation, pagination } = this.props;
+    const {
+      children,
+      initPage,
+      navigation,
+      pagination,
+      direction,
+    } = this.props;
     const pageControllerInit = {
       visibleNavigation: navigation, // 是否显示分页按钮
       visiblePagination: pagination, // 是否显示轮播指示器
@@ -28,7 +34,9 @@ class Fullpage extends Component {
       pageController: pageControllerInit,
       offset: 0,
       pageCount: children.length,
+      isVertical: direction === "vertical",
     };
+    this.onResize = debounce(this.getSize, 200);
   }
 
   // 初始化
@@ -46,7 +54,7 @@ class Fullpage extends Component {
 
       this.jumpPage(_currentPage);
     }
-    debounce(this.getSize, 200);
+    this.onResize();
   };
 
   // 跳转到指定页
@@ -62,7 +70,8 @@ class Fullpage extends Component {
 
   // 获取并设置当前窗口尺寸
   getSize = () => {
-    const { responsiveHeight, isVertical, scrollBar } = this.props;
+    const { responsiveHeight, scrollBar } = this.props;
+    const { isVertical } = this.state;
     const viewPortWidth =
       window.innerWidth ||
       document.documentElement.clientWidth ||
@@ -85,24 +94,24 @@ class Fullpage extends Component {
 
   // 监听window事件
   listener = () => {
-    window.addEventListener("resize", this.onResize());
-    document.body.addEventListener("touchmove", onTouchMove, {
+    window.addEventListener("resize", this.onResize);
+    document.body.addEventListener("touchmove", this.onTouchMove, {
       passive: false,
     });
   };
 
   // 移除监听windows事件
   removeListener = () => {
-    window.removeEventListener("resize", this.onResize());
-    document.body.removeEventListener("touchmove", onTouchMove, {
+    window.removeEventListener("resize", this.onResize);
+    document.body.removeEventListener("touchmove", this.onTouchMove, {
       passive: false,
     });
   };
 
   // 监听 currentPage 和 dimensions 变化
   onCurrentPageAndDimensions = () => {
-    const { isVertical } = this.props;
     const {
+      isVertical,
       currentPage,
       dimensions: { width, height },
     } = this.state;
@@ -116,14 +125,9 @@ class Fullpage extends Component {
 
   // 监听 dimensions 变化
   onDimensions = () => {
+    const { scrollBar, responsiveHeight, navigation, pagination } = this.props;
     const {
-      scrollBar,
-      responsiveHeight,
       isVertical,
-      navigation,
-      pagination,
-    } = this.props;
-    const {
       pageController,
       dimensions: { height },
     } = this.state;
@@ -182,7 +186,7 @@ class Fullpage extends Component {
 
   // 监听向上滚动
   upHandler = () => {
-    const { isVertical } = this.props;
+    const { isVertical } = this.state;
     if (!isVertical) {
       return false;
     }
@@ -191,7 +195,7 @@ class Fullpage extends Component {
 
   // 监听向下滚动
   downHandler = () => {
-    const { isVertical } = this.props;
+    const { isVertical } = this.state;
     if (!isVertical) {
       return false;
     }
@@ -200,8 +204,8 @@ class Fullpage extends Component {
 
   // 监听向左滚动
   leftHandler = () => {
-    const { isVertical } = this.props;
-    if (!isVertical) {
+    const { isVertical } = this.state;
+    if (isVertical) {
       return false;
     }
     this.scroll(1);
@@ -209,8 +213,8 @@ class Fullpage extends Component {
 
   // 监听向右滚动
   rightHandler = () => {
-    const { isVertical } = this.props;
-    if (!isVertical) {
+    const { isVertical } = this.state;
+    if (isVertical) {
       return false;
     }
     this.scroll(-1);
@@ -227,10 +231,10 @@ class Fullpage extends Component {
       dimensions: prevDimensions,
     } = prevState;
     const { currentPage, dimensions } = this.state;
-    if (isEqual(prevCurrentPage, currentPage)) {
+    if (!isEqual(prevCurrentPage, currentPage)) {
       this.onCurrentPageAndDimensions();
     }
-    if (isEqual(prevDimensions, dimensions)) {
+    if (!isEqual(prevDimensions, dimensions)) {
       this.onCurrentPageAndDimensions();
       this.onDimensions();
     }
@@ -243,7 +247,6 @@ class Fullpage extends Component {
   render() {
     const {
       children,
-      isVertical,
       pageTimeout,
       duration,
       renderPrevButton,
@@ -251,6 +254,7 @@ class Fullpage extends Component {
       paginationType,
     } = this.props;
     const {
+      isVertical,
       dimensions,
       pageCount,
       offset,
