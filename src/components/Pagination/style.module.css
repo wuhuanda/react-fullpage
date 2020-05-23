@@ -1,4 +1,4 @@
-.paginationHorizontal {
+.pagination_horizontal {
   position: fixed;
   display: flex;
   flex-direction: row;
@@ -10,7 +10,7 @@
   bottom: 0;
 }
 
-.paginationVertical {
+.pagination_vertical {
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -22,20 +22,19 @@
   top: 0;
 }
 
-.paginationDot {
-  $DOT_SIZE: 5px;
-  width: $DOT_SIZE;
-  height: $DOT_SIZE;
+.pagination_dot {
+  width: 5px;
+  height: 5px;
   background-color: #fff;
   border-radius: 50%;
   cursor: pointer;
 }
 
-.paginationDotActive {
+.pagination_dot_active {
   background-color: #000;
 }
 
-.paginationNum {
+.pagination_num {
   font-size: medium;
   color: #fff;
 }

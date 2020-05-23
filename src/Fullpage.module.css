@@ -1,0 +1,4 @@
+.fullpage {
+  transition-property: transform;
+  transition-timing-function: linear;
+}

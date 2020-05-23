@@ -1,0 +1,27 @@
+.nav_prev {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 50px;
+}
+
+.nav_next {
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 50px;
+}
+
+.arrow_left,
+.arrow_right {
+  font-size: xx-large;
+  color: #000;
+}

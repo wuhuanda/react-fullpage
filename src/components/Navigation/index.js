@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import styles from "./style.module.scss";
+import styles from "./style.module.css";
 
 class Navigation extends Component {
   arrowLeft = () => {
-    return <div className={styles.arrowLeft}>{"<"}</div>;
+    return <div className={styles.arrow_left}>{"<"}</div>;
   };
 
   arrowRight = () => {
-    return <div className={styles.arrowRight}>{">"}</div>;
+    return <div className={styles.arrow_right}>{">"}</div>;
   };
 
   render() {
@@ -31,13 +31,13 @@ class Navigation extends Component {
     }
 
     return (
-      <div className={styles.navigation}>
-        <div className={styles.navPrev}>
+      <div>
+        <div className={styles.nav_prev}>
           <div onClick={handlePrev}>
             {renderPrevButton ? renderPrevButton() : this.arrowLeft()}
           </div>
         </div>
-        <div className={styles.navNext}>
+        <div className={styles.nav_next}>
           <div onClick={handleNext}>
             {renderNextButton ? renderNextButton() : this.arrowRight()}
           </div>

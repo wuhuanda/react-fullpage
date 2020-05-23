@@ -30,9 +30,6 @@ const prodConfig = {
               ],
             },
           },
-          {
-            loader: "sass-loader",
-          },
         ],
       },
     ],

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 
-import styles from "./style.module.scss";
+import styles from "./style.module.css";
 
 class Pagination extends Component {
   renderIndicator = () => {
@@ -26,8 +26,8 @@ class Pagination extends Component {
           key={index}
           style={DOT_STYLE}
           className={classNames(
-            styles.paginationDot,
-            currentPage === index ? styles.paginationDotActive : ""
+            styles.pagination_dot,
+            currentPage === index ? styles.pagination_dot_active : ""
           )}
           onClick={() => handleChangePage(index)}
         ></div>
@@ -40,7 +40,7 @@ class Pagination extends Component {
     const textArr = [currentPage + 1, "/", pageCount];
     const NUM_STYLE = isVertical ? { margin: "5px 0 " } : { margin: "0 5px" };
     return textArr.map((item, index) => (
-      <div key={index} style={NUM_STYLE} className={styles.paginationNum}>
+      <div key={index} style={NUM_STYLE} className={styles.pagination_num}>
         {item}
       </div>
     ));
@@ -54,7 +54,7 @@ class Pagination extends Component {
     return (
       <div
         className={
-          isVertical ? styles.paginationVertical : styles.paginationHorizontal
+          isVertical ? styles.pagination_vertical : styles.pagination_horizontal
         }
       >
         {this.renderIndicator()}

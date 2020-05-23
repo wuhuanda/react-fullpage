@@ -4,7 +4,7 @@ import ReactScrollWheelHandler from "react-scroll-wheel-handler";
 import debounce from "./lib/debounce";
 import isEqual from "./lib/isEqual";
 
-import styles from "./Fullpage.module.scss";
+import styles from "./Fullpage.module.css";
 import Pagination from "./components/Pagination";
 import Navigation from "./components/Navigation";
 
@@ -279,7 +279,6 @@ class Fullpage extends Component {
     });
     return (
       <ReactScrollWheelHandler
-        className={styles.container}
         style={CONTAINER_STYLE}
         upHandler={this.upHandler}
         downHandler={this.downHandler}
